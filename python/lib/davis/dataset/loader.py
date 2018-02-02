@@ -91,8 +91,12 @@ class DAVISLoader(object):
         pass
 
     try:
-      self.color_palette = np.array(Image.open(
-        self.annotations[0].files[0]).getpalette()).reshape(-1,3)
+      # self.color_palette = np.array(Image.open(
+      #   self.annotations[0].files[0]).getpalette()).reshape(-1,3)
+      im = Image.open(self.annotations[0].files[0])
+      if im.mode != 'P':
+        im = im.convert(mode='P')
+      self.color_palette = np.array(im.getpalette()).reshape(-1,3)
     except Exception as e:
       self.color_palette = np.array([[0,255,0]])
 

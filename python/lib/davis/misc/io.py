@@ -8,6 +8,8 @@ def imread_indexed(filename):
   """ Load image given filename."""
 
   im = Image.open(filename)
+  if im.mode != 'P':
+    im = im.convert(mode='P')
 
   annotation = np.atleast_3d(im)[...,0]
   return annotation,np.array(im.getpalette()).reshape((-1,3))

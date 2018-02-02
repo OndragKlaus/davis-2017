@@ -114,7 +114,11 @@ class Segmentation(BaseLoader):
 
     if len(self):
       # Extract color palette from image file
-      self.color_palette = Image.open(self.files[0]).getpalette()
+      # self.color_palette = Image.open(self.files[0]).getpalette()
+      im = Image.open(self.files[0])
+      if im.mode != 'P':
+        im = im.convert(mode='P')
+      self.color_palette = im.getpalette()
 
       if self.color_palette is not None:
         self.color_palette = np.array(
